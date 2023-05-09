@@ -1,0 +1,1 @@
+This script looks for a .gitignore file in your git folder and prompts you before deleting all files ignored by the .gitignore
