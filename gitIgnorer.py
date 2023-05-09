@@ -1,6 +1,6 @@
 import os
 import pathspec
-
+from natsort import natsorted
 
 GITIGNORE = ".gitignore"
 
@@ -8,7 +8,7 @@ GITIGNORE = ".gitignore"
 gitignoreLines = []
 try:
     with open(GITIGNORE, "r") as f:
-        gitignore = f.readlines()
+        gitignoreLines = f.readlines()
 except FileNotFoundError:
     print("No .gitignore file found")
     exit(1)
@@ -23,13 +23,17 @@ for root, dirs, files in os.walk("."):
         allPaths.append(os.path.join(root, name))
 
 # compare the two
-
 toBeDeleted = []
 for path in allPaths:
     if spec.match_file(path):
         toBeDeleted.append(path)
+toBeDeleted = natsorted(toBeDeleted) # sorts filepaths in a human readable way
 
 # prompt delete
+if len(toBeDeleted) == 0:
+    print("No files to be deleted")
+    exit(0)
+
 print("Found the following files to be deleted:")
 for path in toBeDeleted:
     print(path)
