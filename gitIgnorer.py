@@ -15,7 +15,6 @@ except FileNotFoundError:
 
 spec = pathspec.PathSpec.from_lines(pathspec.patterns.GitWildMatchPattern, gitignoreLines)
 
-
 # find all files in the directory
 allPaths = []
 for root, dirs, files in os.walk("."):
@@ -43,3 +42,6 @@ delete = input("Delete? (y/n): ")
 if delete == "y":
     for path in toBeDeleted:
         os.remove(path)
+    print("Deleted")
+else:
+    print("Not deleted")
